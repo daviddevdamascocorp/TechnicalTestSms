@@ -11,7 +11,7 @@ data class MessageModel(
     val read:Boolean,
     val type:Int,
     val thread:Int,
-    val service:Int
+    val service: String
 
 )
 

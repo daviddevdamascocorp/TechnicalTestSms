@@ -1,13 +1,20 @@
 package com.example.apptextmessdavid.components.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.content.MediaType.Companion.Text
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -16,6 +23,12 @@ fun SendView(sender:String){
         modifier = Modifier.fillMaxWidth().size(64.dp).background(color = Color.White),
         contentAlignment = Alignment.Center
     ){
-
+    Text(
+        modifier = Modifier.fillMaxWidth().size(64.dp),
+        text = sender,
+        fontSize = MaterialTheme.typography.titleLarge.fontSize,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.onSurface
+    )
     }
 }
