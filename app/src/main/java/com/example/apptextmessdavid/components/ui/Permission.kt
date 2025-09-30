@@ -29,6 +29,7 @@ private fun RequestSmsPermission(onPermissionGranted: () -> Unit){
 
     )
     var sendSmsPrmission =  rememberPermissionState(android.Manifest.permission.SEND_SMS)
+    var receiveSmsPrmission =  rememberPermissionState(android.Manifest.permission.RECEIVE_SMS)
     if(readSmsPrmission.status.isGranted ){
         onPermissionGranted()
     }else{
@@ -47,7 +48,8 @@ private fun RequestSmsPermission(onPermissionGranted: () -> Unit){
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
                     .padding(bottom = 20.dp))
-            Button(onClick = { readSmsPrmission.launchPermissionRequest() }) {
+            Button(onClick = { arrayOf(readSmsPrmission.launchPermissionRequest(),
+                sendSmsPrmission.launchPermissionRequest(),receiveSmsPrmission.launchPermissionRequest())  }) {
                 Text(text = "Request permission")
             }
 

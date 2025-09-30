@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.apptextmessdavid.components.ui.MainScreen
+import com.example.apptextmessdavid.components.ui.MessageMainView
 import com.example.apptextmessdavid.components.ui.PermissionScreen
 
 @Composable
@@ -21,7 +22,7 @@ fun SetUpNavGraph(
             })
         }
         composable(route = Screen.Main.route){
-                MainScreen()
+            MessageMainView()
         }
 
     }
