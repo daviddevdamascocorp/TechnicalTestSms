@@ -87,7 +87,7 @@ private  fun readMessages(context:Context, type:String):List<MessageModel>{
                     read = it.getString(indexRead).toBoolean(),
                     type = it.getInt(indexType),
                     thread =  it.getInt(indexThread),
-                    service = it.getString(indexService)
+                    service = it.getString(indexService) ?:""
 
                 )
             )

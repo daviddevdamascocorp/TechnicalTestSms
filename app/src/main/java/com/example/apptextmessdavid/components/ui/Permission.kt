@@ -18,7 +18,7 @@ import com.google.accompanist.permissions.shouldShowRationale
 
 @Composable
 fun PermissionScreen(onPermissionGranted:()->Unit){
-
+    RequestSmsPermission(onPermissionGranted = onPermissionGranted)
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -29,14 +29,14 @@ private fun RequestSmsPermission(onPermissionGranted: () -> Unit){
 
     )
     var sendSmsPrmission =  rememberPermissionState(android.Manifest.permission.SEND_SMS)
-    if(readSmsPrmission.status.isGranted && sendSmsPrmission.status.isGranted){
+    if(readSmsPrmission.status.isGranted ){
         onPermissionGranted()
     }else{
         Column(modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-            var textShow = if (readSmsPrmission.status.shouldShowRationale && sendSmsPrmission.status.shouldShowRationale){
+            var textShow = if (readSmsPrmission.status.shouldShowRationale){
                 "Permission is important for this app, grant the permission"
             } else {
                 "Permission required for this application to work. " +
