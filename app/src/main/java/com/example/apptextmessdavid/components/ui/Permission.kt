@@ -1,5 +1,8 @@
 package com.example.apptextmessdavid.components.ui
 
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -29,7 +33,6 @@ private fun RequestSmsPermission(onPermissionGranted: () -> Unit){
 
     )
     var sendSmsPrmission =  rememberPermissionState(android.Manifest.permission.SEND_SMS)
-    var receiveSmsPrmission =  rememberPermissionState(android.Manifest.permission.RECEIVE_SMS)
     if(readSmsPrmission.status.isGranted ){
         onPermissionGranted()
     }else{
@@ -37,20 +40,23 @@ private fun RequestSmsPermission(onPermissionGranted: () -> Unit){
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-            var textShow = if (readSmsPrmission.status.shouldShowRationale){
-                "Permission is important for this app, grant the permission"
-            } else {
-                "Permission required for this application to work. " +
-                        "Please grant the permission"
-
+            val launcher = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.RequestMultiplePermissions()
+            ) { permissions ->
+                val allGranted = permissions.values.all { it }
+                if (allGranted) {
+                    onPermissionGranted()
+                }
             }
-            Text(text = textShow,
-                modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .padding(bottom = 20.dp))
-            Button(onClick = { arrayOf(readSmsPrmission.launchPermissionRequest(),
-                sendSmsPrmission.launchPermissionRequest(),receiveSmsPrmission.launchPermissionRequest())  }) {
-                Text(text = "Request permission")
+
+            LaunchedEffect(Unit) {
+                launcher.launch(
+                    arrayOf(
+                        Manifest.permission.READ_SMS,
+                        Manifest.permission.RECEIVE_SMS,
+                        Manifest.permission.SEND_SMS
+                    )
+                )
             }
 
         }
